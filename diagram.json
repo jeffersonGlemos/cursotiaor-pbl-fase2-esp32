@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "author": "Jefferson - FarmTech Solutions",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+
+    { "type": "wokwi-text", "id": "lbl_val",  "top": -550, "left": -270, "attrs": { "text": "[ VALOR NPK (0-99) ]", "color": "#00ddff" } },
+    { "type": "wokwi-7segment", "id": "dispVal", "top": -510, "left": -260,
+      "attrs": { "color": "#00ddff", "common": "anode", "digits": "3" } },
+
+    { "type": "wokwi-text", "id": "lbl_sel",  "top": -550, "left": 30, "attrs": { "text": "[ SEL ]", "color": "#ff8855" } },
+    { "type": "wokwi-7segment", "id": "dispSel", "top": -510, "left": 40,
+      "attrs": { "color": "#ff8855", "common": "anode", "digits": "1" } },
+    { "type": "wokwi-text", "id": "lbl_npk",  "top": -470, "left": 10, "attrs": { "text": "1=N  2=P  3=K", "color": "#ff8855" } },
+
+    { "type": "wokwi-text", "id": "lbl_ph",   "top": -550, "left": 165, "attrs": { "text": "[ pH SOLO (0.0-14.0) ]", "color": "#88ff55" } },
+    { "type": "wokwi-7segment", "id": "dispPh", "top": -510, "left": 175,
+      "attrs": { "color": "#88ff55", "common": "anode", "digits": "3" } },
+    { "type": "wokwi-text", "id": "lbl_ph2",  "top": -470, "left": 160, "attrs": { "text": "pH = base - NPK", "color": "#88ff55" } },
+
+    { "type": "wokwi-text",     "id": "lbl_pot",  "top": -390, "left": -460, "attrs": { "text": "NUTRIENTE SELECIONADO", "color": "#ffffff" } },
+    { "type": "wokwi-slide-potentiometer", "id": "potNpk", "top": -350, "left": -440,
+      "attrs": { "travelLength": "30" } },
+
+    { "type": "wokwi-text",     "id": "lbl_btn",  "top": -185, "left": -420, "attrs": { "text": "SEL  (cicla N→P→K)", "color": "#ffffff" } },
+    { "type": "wokwi-pushbutton", "id": "btnSel", "top": -160, "left": -410,
+      "attrs": { "color": "green", "label": "SEL" } },
+
+    { "type": "wokwi-text",     "id": "lbl_ldr",  "top": 50,  "left": -430, "attrs": { "text": "LDR - pH base do solo", "color": "#ffffff" } },
+    { "type": "wokwi-photoresistor-sensor", "id": "ldr1", "top": 80, "left": -390,
+      "attrs": {} },
+
+    { "type": "wokwi-text",     "id": "lbl_dht",  "top": 50,  "left": 255, "attrs": { "text": "DHT22 - Umidade/Temp", "color": "#ffffff" } },
+    { "type": "wokwi-dht22",    "id": "dht1",  "top": 80, "left": 270, "attrs": {} },
+
+    { "type": "wokwi-text",     "id": "lbl_rele", "top": 300, "left": -55, "attrs": { "text": "BOMBA D'AGUA", "color": "#ffffff" } },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": 260, "left": -10, "attrs": {} },
+
+    { "type": "wokwi-text",     "id": "lbl_led",  "top": -155, "left": -280, "attrs": { "text": "LED (bomba ligada)", "color": "#ff4444" } },
+    { "type": "wokwi-led",      "id": "led1",  "top": -120, "left": -255, "attrs": { "color": "red" } },
+    { "type": "wokwi-resistor", "id": "r1",    "top": -85,  "left": -255, "attrs": { "value": "220" } },
+
+    { "type": "wokwi-text",     "id": "lbl_buz",  "top": -155, "left": -130, "attrs": { "text": "BUZZER (bip)", "color": "#ffdd44" } },
+    { "type": "wokwi-buzzer",   "id": "bz1",   "top": -120, "left": -130, "attrs": { "volume": "0.1" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+
+    [ "potNpk:VCC", "esp:3V3",   "red",    [] ],
+    [ "potNpk:GND", "esp:GND.2", "black",  [] ],
+    [ "potNpk:SIG", "esp:34",    "yellow", [] ],
+
+    [ "btnSel:1.l", "esp:15",    "green", [] ],
+    [ "btnSel:2.r", "esp:GND.1", "black", [] ],
+
+    [ "dispVal:A",  "esp:25", "gold", [] ],
+    [ "dispVal:B",  "esp:26", "gold", [] ],
+    [ "dispVal:C",  "esp:27", "gold", [] ],
+    [ "dispVal:D",  "esp:13", "gold", [] ],
+    [ "dispVal:E",  "esp:14", "gold", [] ],
+    [ "dispVal:F",  "esp:16", "gold", [] ],
+    [ "dispVal:G",  "esp:17", "gold", [] ],
+    [ "dispVal:DP", "esp:5",  "gold", [] ],
+    [ "dispVal:DIG1", "esp:21", "violet", [] ],
+    [ "dispVal:DIG2", "esp:22", "violet", [] ],
+    [ "dispVal:DIG3", "esp:4",  "violet", [] ],
+
+    [ "dispSel:A",  "esp:25", "gold", [] ],
+    [ "dispSel:B",  "esp:26", "gold", [] ],
+    [ "dispSel:C",  "esp:27", "gold", [] ],
+    [ "dispSel:D",  "esp:13", "gold", [] ],
+    [ "dispSel:E",  "esp:14", "gold", [] ],
+    [ "dispSel:F",  "esp:16", "gold", [] ],
+    [ "dispSel:G",  "esp:17", "gold", [] ],
+    [ "dispSel:DP", "esp:5",  "gold", [] ],
+    [ "dispSel:COM", "esp:32", "violet", [] ],
+
+    [ "dispPh:A",  "esp:25", "gold", [] ],
+    [ "dispPh:B",  "esp:26", "gold", [] ],
+    [ "dispPh:C",  "esp:27", "gold", [] ],
+    [ "dispPh:D",  "esp:13", "gold", [] ],
+    [ "dispPh:E",  "esp:14", "gold", [] ],
+    [ "dispPh:F",  "esp:16", "gold", [] ],
+    [ "dispPh:G",  "esp:17", "gold", [] ],
+    [ "dispPh:DP", "esp:5",  "gold", [] ],
+    [ "dispPh:DIG1", "esp:2",  "violet", [] ],
+    [ "dispPh:DIG2", "esp:0",  "violet", [] ],
+    [ "dispPh:DIG3", "esp:12", "violet", [] ],
+
+    [ "ldr1:VCC", "esp:3V3",   "red",    [] ],
+    [ "ldr1:GND", "esp:GND.2", "black",  [] ],
+    [ "ldr1:AO",  "esp:35",    "yellow", [] ],
+
+    [ "dht1:VCC", "esp:3V3",   "red",   [] ],
+    [ "dht1:GND", "esp:GND.2", "black", [] ],
+    [ "dht1:SDA", "esp:18",    "blue",  [] ],
+
+    [ "relay1:VCC", "esp:5V",    "red",    [] ],
+    [ "relay1:GND", "esp:GND.1", "black",  [] ],
+    [ "relay1:IN",  "esp:23",    "orange", [] ],
+
+    [ "esp:19",  "r1:1",      "orange", [] ],
+    [ "r1:2",    "led1:A",    "orange", [] ],
+    [ "led1:C",  "esp:GND.1", "black",  [] ],
+
+    [ "bz1:1", "esp:33",    "orange", [] ],
+    [ "bz1:2", "esp:GND.1", "black",  [] ]
+  ],
+  "dependencies": {}
+}

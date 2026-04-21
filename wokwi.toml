@@ -1,0 +1,19 @@
+# Wokwi config - usado pela extensao Wokwi for VS Code e pelo wokwi-cli.
+# Aponta para o binario compilado do firmware.
+#
+# === PlatformIO (recomendado) ===
+# Rode `pio run` antes de iniciar a simulacao.
+[wokwi]
+version = 1
+# ESP32 precisa do firmware merged (bootloader + partitions + app) num único
+# .bin. PlatformIO gera os 3 separados, então ./scripts/wokwi-run.sh roda
+# `esptool.py merge_bin` depois do `pio run`.
+firmware = '.pio/build/esp32dev/firmware.merged.bin'
+elf      = '.pio/build/esp32dev/firmware.elf'
+
+# === Alternativa: Arduino CLI ===
+# Compile com:
+#   arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir build farmtech.ino
+# E troque os caminhos acima por:
+#   firmware = 'build/farmtech.ino.bin'
+#   elf      = 'build/farmtech.ino.elf'
