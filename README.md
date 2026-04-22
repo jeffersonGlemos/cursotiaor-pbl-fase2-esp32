@@ -11,8 +11,9 @@ cultura de **soja**.
 
 ## Vídeo demonstrativo (≤ 5 min, unlisted)
 
-> <!-- TODO: colar link do YouTube após gravação -->
-> `https://youtu.be/PREENCHER_APOS_UPLOAD`
+[![FarmTech Solutions — Demo ESP32](https://img.youtube.com/vi/9Fnvs7U4hqs/0.jpg)](https://youtu.be/9Fnvs7U4hqs)
+
+<https://youtu.be/9Fnvs7U4hqs>
 
 ---
 
